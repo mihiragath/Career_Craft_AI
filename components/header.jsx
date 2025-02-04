@@ -1,28 +1,27 @@
-"use client"; // Ensures this runs only on the client side
-
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import {
-  ChevronDown,
-  FileText,
-  GraduationCap,
-  LayoutDashboard,
-  PenBox,
-  StarIcon,
-  StarsIcon,
-} from "lucide-react";
-import Link from "next/link"; // ✅ Correct import
 import React from "react";
 import { Button } from "./ui/button";
-import Image from "next/image";
+import {
+  PenBox,
+  LayoutDashboard,
+  FileText,
+  GraduationCap,
+  ChevronDown,
+  StarsIcon,
+} from "lucide-react";
+import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+import { checkUser } from "@/lib/checkUser";
 
-function Header() {
+export default async function Header() {
+  await checkUser();
+
   return (
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50 supports-[backdrop-filter]:bg-background/60">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -92,6 +91,7 @@ function Header() {
               <Button variant="outline">Sign In</Button>
             </SignInButton>
           </SignedOut>
+
           <SignedIn>
             <UserButton
               appearance={{
@@ -109,5 +109,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;
