@@ -21,16 +21,16 @@ export async function generateQuiz() {
 
   if (!user) throw new Error("User not found");
 
-  const skillsText =
-    Array.isArray(user.skills) && user.skills.length
-      ? ` with expertise in ${user.skills.join(", ")}`
-      : "";
-
   const prompt = `
-    Generate 10 multiple-choice technical interview questions for a ${user.industry} professional${skillsText}.
-    Each question should have exactly 4 options and one correct answer.
-
-    Format the response as JSON (no extra text, no explanation outside JSON):
+    Generate 10 technical interview questions for a ${
+      user.industry
+    } professional${
+    user.skills?.length ? ` with expertise in ${user.skills.join(", ")}` : ""
+  }.
+    
+    Each question should be multiple choice with 4 options.
+    
+    Return the response in this JSON format only, no additional text:
     {
       "questions": [
         {
@@ -45,20 +45,10 @@ export async function generateQuiz() {
 
   try {
     const result = await model.generateContent(prompt);
-    const text = await result.response.text();
+    const response = result.response;
+    const text = response.text();
     const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
-
-    let quiz;
-    try {
-      quiz = JSON.parse(cleanedText);
-    } catch (jsonError) {
-      console.error("JSON Parsing Error:", jsonError);
-      throw new Error("Failed to parse quiz questions");
-    }
-
-    if (!quiz?.questions || !Array.isArray(quiz.questions)) {
-      throw new Error("Invalid quiz format received");
-    }
+    const quiz = JSON.parse(cleanedText);
 
     return quiz.questions;
   } catch (error) {

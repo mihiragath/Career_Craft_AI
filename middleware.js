@@ -9,7 +9,6 @@ const isProtectedRoute = createRouteMatcher([
   "/onboarding(.*)",
 ]);
 
-// Clerk Middleware for Authentication
 export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
 
@@ -17,6 +16,7 @@ export default clerkMiddleware(async (auth, req) => {
     const { redirectToSignIn } = await auth();
     return redirectToSignIn();
   }
+
   return NextResponse.next();
 });
 

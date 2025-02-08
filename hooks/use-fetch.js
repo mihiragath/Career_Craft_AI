@@ -3,8 +3,8 @@ import { toast } from "sonner";
 
 const useFetch = (cb) => {
   const [data, setData] = useState(undefined);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
 
   const fn = async (...args) => {
     setLoading(true);
@@ -13,7 +13,7 @@ const useFetch = (cb) => {
     try {
       const response = await cb(...args);
       setData(response);
-      setLoading(false);
+      setError(null);
     } catch (error) {
       setError(error);
       toast.error(error.message);
@@ -21,7 +21,8 @@ const useFetch = (cb) => {
       setLoading(false);
     }
   };
-  return { data, error, loading, fn, setData };
+
+  return { data, loading, error, fn, setData };
 };
 
 export default useFetch;
