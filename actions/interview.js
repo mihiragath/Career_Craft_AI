@@ -25,8 +25,13 @@ export async function generateQuiz() {
     Generate 10 technical interview questions for a ${
       user.industry
     } professional${
+<<<<<<< HEAD
       user.skills?.length ? ` with expertise in ${user.skills.join(", ")}` : ""
     }.
+=======
+    user.skills?.length ? ` with expertise in ${user.skills.join(", ")}` : ""
+  }.
+>>>>>>> master
     
     Each question should be multiple choice with 4 options.
     
@@ -84,7 +89,11 @@ export async function saveQuizResult(questions, answers, score) {
     const wrongQuestionsText = wrongAnswers
       .map(
         (q) =>
+<<<<<<< HEAD
           `Question: "${q.question}"\nCorrect Answer: "${q.answer}"\nUser Answer: "${q.userAnswer}"`,
+=======
+          `Question: "${q.question}"\nCorrect Answer: "${q.answer}"\nUser Answer: "${q.userAnswer}"`
+>>>>>>> master
       )
       .join("\n\n");
 

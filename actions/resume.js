@@ -94,6 +94,9 @@ export async function improveWithAI({ current, type }) {
   } catch (error) {
     console.error("Error improving content:", error);
     throw new Error("Failed to improve content");
+<<<<<<< HEAD
     
+=======
+>>>>>>> master
   }
 }
